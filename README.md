@@ -15,6 +15,8 @@ on the puppet server enables environments to be assigned, regardless of client c
 parameters, and general parameters used as top-scope variables.  Assigning top-scope variables this way can ensure that catalogs are built from controlled data instead of client
 supplied facts, and can be an alternative to using trusted facts, which can be cumbersome to implement.
 
+Class and parameter data supplied by the ENC is merged with data from any environment manifests in building the catalog for a node, with data from the ENC having precedent.
+
 ## Inventory
 
 This ENC script is designed to use a YAML inventory for looking up node classification.  It is written in a way that allows environments to be defined with classes, class
@@ -34,21 +36,21 @@ production:                                          # production environment de
     ntp:                                             # the 'ntp' class has a class parameter
       ntpserver: 0.pool.ntp.org                      # class parameter `ntpserver` for class `ntp`
   parameters:                                        # top-scope variables hash
-    mail_server: mail.example.com                    # this value will take precedent over anything from a manifest
+    mail_server: mail.example.com                    # set a top-scope variable for this environment
 
 dev:                                                 # 'dev' environment
   classes:                                           # assigned classes hash
     types:                                           # the 'types' module has no parameters assigned
   parameters:                                        # top-scope variables hash
-    swallow: african                                 # set a top-scope variable for this entire environment
+    swallow: african                                 # set a top-scope variable for this environment
 
-nodes:                                                # 'nodes' hash 
-  node1: dev                                          # 'node1' assigned to 'dev' environment with no additional customizations
-  node2:                                              # 'node2' defined as a hash
-    environment: dev                                  # 'node2' assigned to 'dev' environment
-    parameters:                                       # top-scope variables hash for this node
-      swallon: european                               # node-specific parameter overrides the defined environment parameter
-  node3: bogus                                        # 'bogus' environment is not defined in the inventory, node defaults to 'production'
+nodes:                                               # 'nodes' hash 
+  node1: dev                                         # 'node1' assigned to 'dev' environment with no additional customizations
+  node2:                                             # 'node2' defined as a hash
+    environment: dev                                 # 'node2' assigned to 'dev' environment
+    parameters:                                      # top-scope variables hash for this node
+      swallow: european                              # node-specific parameter overrides the defined environment parameter
+  node3: bogus                                       # 'bogus' environment not in inventory, node reverts to 'production'
 ```
 
 ## Setup
@@ -69,7 +71,7 @@ Configure the puppet server to use the ENC script.  This can be done my manually
 node_terminus = exec
 external_nodes = /etc/puppetlabs/puppet/enc.rb
 ```
-You can also use puppet commands to update the configuration programitically:
+You can also use puppet commands to update the configuration programmatically:
 ```
 puppet config set --section master node_terminus exec
 puppet config set --section master external_nodes /etc/puppetlabs/puppet/enc.rb
