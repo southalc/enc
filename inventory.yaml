@@ -9,7 +9,7 @@
 # take precedent.  Any node that that is not defined will default to the
 # 'production' environment.
 
-# production environment hash
+# production environment
 production:                                         # production environment definition
   classes:                                          # assigned classes hash
     puppet:                                         # the 'puppet' class has no parameters assigned
@@ -18,12 +18,15 @@ production:                                         # production environment def
   parameters:                                       # top-scope variables hash
     mail_server: mail.example.com                   # this value will take precedent over anything from a manifest
 
-# dev environment hash
+# dev environment
 dev:                                                # 'dev' environment
   classes:                                          # assigned classes hash
     types:                                          # the 'types' module has no parameters assigned
   parameters:                                       # top-scope variables hash
     swallow: african                                # set a top-scope variable for this entire environment
+
+# test environment
+test:
 
 
 # nodes hash
@@ -32,6 +35,9 @@ nodes:                                              # 'nodes' hash
   node2:                                            # 'node2' defined as a hash
     environment: dev                                # 'node2' assigned to 'dev' environment
     parameters:                                     # top-scope variables hash for this node
-      swallow: european                             # node-specific parameter overrides the defined environment parameter
+      swallon: european                             # node-specific parameter overrides the defined environment parameter
   node3: bogus                                      # 'bogus' environment is not defined in the inventory, node defaults to 'production'
+  node4: test                                       # 'node4' assigned to 'test environmen
+  node5:                                            # invalid node definition (must be a hash, not an array), node defaults to 'production'
+    - invalid
 
