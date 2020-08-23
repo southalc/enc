@@ -5,8 +5,7 @@
 
 require 'yaml'
 
-inventory_file = 'inventory.yaml'
-#inventory_file = '/etc/puppetlabs/puppet/inventory.yaml'
+inventory_file = '/etc/puppetlabs/puppet/inventory.yaml'
 
 class Hash
   def deep_merge(h)
