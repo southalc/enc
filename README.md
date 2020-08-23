@@ -90,5 +90,5 @@ environment: dev
 
 ## Reference
 
-See the [documentation for external node classifiers]((https://puppet.com/docs/puppet/latest/nodes_external.html) for more details.
+See the [documentation for external node classifiers](https://puppet.com/docs/puppet/latest/nodes_external.html) for more details.
 
