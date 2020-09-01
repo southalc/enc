@@ -35,7 +35,7 @@ nodes:                                              # 'nodes' hash
   node2:                                            # 'node2' defined as a hash
     environment: dev                                # 'node2' assigned to 'dev' environment
     parameters:                                     # top-scope variables hash for this node
-      swallon: european                             # node-specific parameter overrides the defined environment parameter
+      swallow: european                             # node-specific parameter overrides the defined environment parameter
   node3: bogus                                      # 'bogus' environment is not defined in the inventory, node defaults to 'production'
   node4: test                                       # 'node4' assigned to 'test environmen
   node5:                                            # invalid node definition (must be a hash, not an array), node defaults to 'production'
